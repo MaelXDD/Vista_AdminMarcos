@@ -13,7 +13,7 @@
 
 <!-- NAVBAR -->
 <nav class="navbar-ts">
-    <div class="brand">TECH<span class="brand-dot">●</span>STORE</div>
+    <div class="brand">PHANTOM</div>
     <div class="nav-links">
         <a href="/productos/categorias/nueva" class="nav-btn"><i class="bi bi-tags"></i> Nueva Categoría</a>
         <a href="/productos/nuevo" class="nav-btn primary"><i class="bi bi-plus-lg"></i> Nuevo Producto</a>
@@ -28,7 +28,7 @@
     <div class="page-header">
         <div>
             <div class="page-title">Gestión de <span>Productos</span></div>
-            <div class="page-sub">// TechStore Perú — Panel de administración</div>
+            <div class="page-sub">// PHANTOM — Panel de administración</div>
         </div>
     </div>
 
@@ -44,11 +44,13 @@
                  th:text="${#lists.size(productos.?[stock <= 5])}">0</div>
         </div>
         <div class="stat-card">
-            <div class="stat-label">Búsqueda activa</div>
-            <div class="stat-value" style="font-size:1rem;padding-top:.35rem;"
-                 th:text="${keyword != null and !#strings.isEmpty(keyword)} ? '&quot;' + keyword + '&quot;' : '—'">—</div>
+            <div class="stat-label">Valor Total Inventario</div>
+            <div class="stat-value"
+                 th:text="${'S/ ' + #numbers.formatDecimal(#aggregates.sum(productos.![precio * stock]), 1, 'COMMA', 2, 'POINT')}">
+                S/ 0.00
+            </div>
+            </div>
         </div>
-    </div>
 
     <!-- Search -->
     <form th:action="@{/productos}" method="get" class="search-bar">
