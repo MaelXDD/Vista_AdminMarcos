@@ -18,7 +18,6 @@ public class ProductoController {
 
     @GetMapping
     public String listar(@RequestParam(required = false) String keyword, Model model) {
-        System.out.println("👉 ¡SÍ ENTRÓ AL CONTROLADOR DE PRODUCTOS!"); // Agrega esto
 
         model.addAttribute("productos", productoService.buscarProductos(keyword));
         model.addAttribute("keyword", keyword);
