@@ -1,7 +1,6 @@
 package com.techstore.techstore.entity;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "productos")
@@ -17,8 +16,8 @@ public class Producto {
     @Column(length = 500)
     private String descripcion;
 
-    @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal precio;
+    @Column(nullable = false)
+    private Double precio;
 
     @Column(nullable = false)
     private Integer stock;
@@ -44,8 +43,8 @@ public class Producto {
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public BigDecimal getPrecio() { return precio; }
-    public void setPrecio(BigDecimal precio) { this.precio = precio; }
+    public Double getPrecio() { return precio; }
+    public void setPrecio(Double precio) { this.precio = precio; }
 
     public Integer getStock() { return stock; }
     public void setStock(Integer stock) { this.stock = stock; }

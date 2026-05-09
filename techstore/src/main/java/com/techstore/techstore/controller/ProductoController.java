@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/productos")
 public class ProductoController {
@@ -16,17 +18,31 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
+    // ── ESTE ES EL ÚNICO MÉTODO GETMAPPING PRINCIPAL ──
     @GetMapping
-    public String listar(@RequestParam(required = false) String keyword, Model model) {
+    public String listar(@RequestParam(required = false) String keyword,
+                         @RequestParam(required = false) String filtro,
+                         Model model) {
 
-        model.addAttribute("productos", productoService.buscarProductos(keyword));
+        List<Producto> listaFinal;
+
+        if ("stock_bajo".equals(filtro)) {
+            listaFinal = productoService.obtenerStockBajo(5);
+        } else {
+            listaFinal = productoService.buscarProductos(keyword);
+        }
+
+        model.addAttribute("productos", listaFinal);
         model.addAttribute("keyword", keyword);
         return "productos/lista";
     }
 
     @GetMapping("/nuevo")
     public String nuevo(Model model) {
-        model.addAttribute("producto", new Producto());
+        Producto productoNuevo = new Producto();
+        productoNuevo.setCategoria(new Categoria()); // Evita el error 500
+
+        model.addAttribute("producto", productoNuevo);
         model.addAttribute("categorias", productoService.listarCategorias());
         model.addAttribute("titulo", "Nuevo Producto");
         return "productos/form";
@@ -54,6 +70,7 @@ public class ProductoController {
         return "redirect:/productos";
     }
 
+    // ── CATEGORÍAS ──
     @GetMapping("/categorias/nueva")
     public String nuevaCategoria(Model model) {
         model.addAttribute("categoria", new Categoria());
@@ -63,8 +80,9 @@ public class ProductoController {
     @PostMapping("/categorias/guardar")
     public String guardarCategoria(@ModelAttribute Categoria categoria) {
         productoService.guardarCategoria(categoria);
-        return "redirect:/productos";
+        return "redirect:/productos/categorias";
     }
+
     @GetMapping("/categorias/eliminar/{id}")
     public String eliminarCategoria(@PathVariable Long id, RedirectAttributes redirectAttrs) {
         if (!productoService.categoriaEstaVacia(id)) {

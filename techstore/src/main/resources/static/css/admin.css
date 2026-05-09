@@ -157,3 +157,15 @@ tbody tr:hover { background: rgba(230,57,70,.04); }
     border: none; background: var(--accent); color: #fff; cursor: pointer; transition: background .2s;
 }
 .btn-save:hover { background: var(--accent2); }
+/* --- Resaltado para Stock Bajo --- */
+.row-low-stock {
+    background: rgba(230, 57, 70, 0.08) !important; /* Un rojo muy sutil para la fila */
+}
+
+.row-low-stock:hover {
+    background: rgba(230, 57, 70, 0.12) !important;
+}
+
+.text-warning-custom {
+    color: var(--warning) !important;
+}

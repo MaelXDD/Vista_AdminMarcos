@@ -16,7 +16,7 @@
     <a href="/productos" class="nav-btn"><i class="bi bi-arrow-left"></i> Volver</a>
 </nav>
 
-<div class="main">
+<div class="main main-form">
     <div class="form-card">
         <div class="form-header">
             <div class="form-title" th:text="${titulo}">Producto</div>
@@ -27,6 +27,24 @@
             <input type="hidden" th:field="*{id}"/>
 
             <div class="form-body">
+
+                <div class="field-group">
+                    <label class="field-label">Nombre del producto</label>
+                    <input type="text" th:field="*{nombre}" class="field-input"
+                           placeholder="Ej. PlayStation 5 Digital Edition" required/>
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label">Categoría</label>
+                    <select name="categoria.id" class="field-select" required>
+                        <option value="">— Selecciona una categoría —</option>
+                        <option th:each="cat : ${categorias}"
+                                th:value="${cat.id}"
+                                th:text="${cat.nombre}"
+                                th:selected="${producto.categoria != null and producto.categoria.id == cat.id}">
+                        </option>
+                    </select>
+                </div>
 
                 <div class="field-group">
                     <label class="field-label">Marca</label>

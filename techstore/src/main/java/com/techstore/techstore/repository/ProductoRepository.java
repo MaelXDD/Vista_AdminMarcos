@@ -15,4 +15,6 @@ public interface ProductoRepository extends JpaRepository<Producto, Long> {
     List<Producto> buscarPorNombre(@Param("keyword") String keyword);
 
     List<Producto> findByCategoriaId(Long categoriaId);
+
+    List<Producto> findByStockLessThanEqual(Integer limite);
 }

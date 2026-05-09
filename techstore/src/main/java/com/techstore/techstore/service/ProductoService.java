@@ -55,7 +55,10 @@ public class ProductoService {
     public void guardarCategoria(Categoria categoria) {
         categoriaRepository.save(categoria);
     }
-
+    // ── Filtro de Stock Bajo ──────────────────────────────────────────────────
+    public List<Producto> obtenerStockBajo(Integer limite) {
+        return productoRepository.findByStockLessThanEqual(limite);
+    }
     public boolean categoriaEstaVacia(Long id) {
         return productoRepository.findByCategoriaId(id).isEmpty();
     }
